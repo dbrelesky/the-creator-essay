@@ -24,7 +24,6 @@
   }
 
   html {
-    scroll-behavior: smooth;
     font-size: 18px;
     scrollbar-width: thin;
     scrollbar-color: var(--amber) var(--charcoal);
@@ -38,7 +37,7 @@
   }
 
   /* ═══════════════════════════════════════════
-     SECTION 1: HERO — Full bleed photo
+     SECTION 1: HERO — Parallax photo
      ═══════════════════════════════════════════ */
   .hero {
     position: relative;
@@ -52,8 +51,9 @@
 
   .hero-image-layer {
     position: absolute;
-    inset: 0;
+    inset: -20% 0;
     z-index: 1;
+    will-change: transform;
   }
 
   .hero-image-layer img {
@@ -90,7 +90,7 @@
     text-align: center;
     padding: 0 2rem 6vh;
     max-width: 900px;
-    animation: fadeUp 1.8s ease-out both;
+    will-change: transform, opacity;
   }
 
   .hero-overline {
@@ -100,7 +100,8 @@
     text-transform: uppercase;
     color: var(--amber-light);
     margin-bottom: 1.2rem;
-    opacity: 0.9;
+    opacity: 0;
+    animation: fadeUp 1s ease-out 0.3s forwards;
   }
 
   .hero-title {
@@ -111,6 +112,8 @@
     color: var(--cream);
     margin-bottom: 1rem;
     text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+    opacity: 0;
+    animation: fadeUp 1.2s ease-out 0.6s forwards;
   }
 
   .hero-title em {
@@ -124,7 +127,8 @@
     font-size: 0.85rem;
     letter-spacing: 0.12em;
     color: var(--amber);
-    opacity: 0.8;
+    opacity: 0;
+    animation: fadeUp 1s ease-out 0.9s forwards;
   }
 
   .scroll-hint {
@@ -170,8 +174,7 @@
     overflow: hidden;
   }
 
-  .quote-break::before {
-    content: '\201C';
+  .quote-break .big-quote {
     position: absolute;
     font-family: 'Playfair Display', serif;
     font-size: 40rem;
@@ -181,6 +184,8 @@
     transform: translateX(-50%);
     line-height: 1;
     pointer-events: none;
+    will-change: transform, opacity;
+    transition: transform 0.1s linear, opacity 0.1s linear;
   }
 
   .quote-break blockquote {
@@ -325,13 +330,15 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    width: 60px;
     height: 1px;
     background: var(--amber);
+    transition: width 1.2s ease-out;
   }
 
-  .pull-quote::before { top: 0; }
-  .pull-quote::after { bottom: 0; }
+  .pull-quote::before { top: 0; width: 0; }
+  .pull-quote::after { bottom: 0; width: 0; }
+  .pull-quote.in-view::before,
+  .pull-quote.in-view::after { width: 60px; }
 
   .pull-quote p {
     font-family: 'Bebas Neue', sans-serif;
@@ -344,6 +351,31 @@
 
   .pull-quote .accent {
     color: var(--amber-dark);
+  }
+
+  /* ═══════════════════════════════════════════
+     Decorative separator — animated
+     ═══════════════════════════════════════════ */
+  .separator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0;
+    gap: 1rem;
+  }
+
+  .separator .dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--amber);
+  }
+
+  .separator .dash {
+    width: 40px;
+    height: 1px;
+    background: var(--amber);
+    opacity: 0.4;
   }
 
   /* ═══════════════════════════════════════════
@@ -402,9 +434,6 @@
   }
 
   /* ═══════════════════════════════════════════
-     FOOTER
-     ═══════════════════════════════════════════ */
-  /* ═══════════════════════════════════════════
      HERE & NOW portrait section
      ═══════════════════════════════════════════ */
   .here-and-now {
@@ -457,8 +486,6 @@
     font-size: 2.4rem;
     color: var(--amber-light);
     white-space: nowrap;
-    opacity: 0;
-    animation: signFade 1.2s ease-out 0.8s forwards;
     text-shadow: 0 1px 8px rgba(0,0,0,0.4);
     transform: rotate(-4deg);
   }
@@ -471,34 +498,6 @@
     background: linear-gradient(to right, transparent, var(--amber-light), transparent);
     margin-top: 2px;
     opacity: 0.4;
-  }
-
-  @keyframes signFade {
-    from { opacity: 0; transform: rotate(-4deg) translateY(8px); }
-    to { opacity: 0.9; transform: rotate(-4deg) translateY(0); }
-  }
-
-  @media (max-width: 768px) {
-    .here-and-now .signature {
-      right: -20px;
-      bottom: -18px;
-      font-size: 1.8rem;
-    }
-  }
-
-  .colophon {
-    background: var(--charcoal);
-    border-top: 1px solid var(--charcoal-mid);
-    padding: 3rem 2rem;
-    text-align: center;
-  }
-
-  .colophon p {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.6rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--text-muted);
   }
 
   /* ═══════════════════════════════════════════
@@ -516,22 +515,89 @@
   }
 
   /* ═══════════════════════════════════════════
-     ANIMATIONS
+     SCROLL ANIMATIONS
      ═══════════════════════════════════════════ */
   @keyframes fadeUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   @keyframes pulse {
     0%, 100% { opacity: 0.4; }
     50% { opacity: 0.8; }
+  }
+
+  /* Reveal system */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-60px);
+    transition: opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .reveal-left.in-view {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .reveal-right.in-view {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+  }
+
+  .reveal-scale.in-view {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Staggered children */
+  .stagger > .reveal:nth-child(1) { transition-delay: 0s; }
+  .stagger > .reveal:nth-child(2) { transition-delay: 0.15s; }
+  .stagger > .reveal:nth-child(3) { transition-delay: 0.3s; }
+  .stagger > .reveal:nth-child(4) { transition-delay: 0.45s; }
+  .stagger > .reveal:nth-child(5) { transition-delay: 0.6s; }
+
+  /* Parallax float elements */
+  .float-element {
+    position: absolute;
+    pointer-events: none;
+    will-change: transform;
+    opacity: 0.06;
+  }
+
+  .float-circle {
+    border-radius: 50%;
+    border: 1px solid var(--amber);
+  }
+
+  .float-line {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--amber), transparent);
   }
 
   /* ═══════════════════════════════════════════
@@ -566,34 +632,30 @@
       padding: 5rem 1.5rem;
     }
 
-    .quote-break::before {
+    .quote-break .big-quote {
       font-size: 20rem;
       top: -4rem;
     }
-  }
 
-  /* Smooth scroll-triggered reveals via CSS */
-  .reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
+    .here-and-now .signature {
+      right: -20px;
+      bottom: -18px;
+      font-size: 1.8rem;
+    }
 
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
+    .float-element { display: none; }
   }
 </style>
 </head>
 <body>
 
   <!-- ════════════ HERO ════════════ -->
-  <section class="hero">
-    <div class="hero-image-layer">
+  <section class="hero" data-parallax-container>
+    <div class="hero-image-layer" data-parallax="0.3">
       <img src="the-creator-photo.png"
            alt="A young boy sits at a conference table at Nickelodeon, surrounded by adults — Bring Your Kid to Work Day">
     </div>
-    <div class="hero-content">
+    <div class="hero-content" data-parallax="-0.15">
       <p class="hero-overline">A College Essay &mdash; A Childhood Memory</p>
       <h1 class="hero-title">I Am a <em>Creator</em></h1>
       <p class="hero-subtitle">The conference room where it all began</p>
@@ -606,7 +668,8 @@
 
   <!-- ════════════ OPENING QUOTE ════════════ -->
   <section class="quote-break">
-    <blockquote>
+    <span class="big-quote" data-parallax-scale>&ldquo;</span>
+    <blockquote class="reveal">
       <p>The only place to go from failure is to win.</p>
       <cite>Tom Platz</cite>
     </blockquote>
@@ -614,52 +677,73 @@
 
   <!-- ════════════ ESSAY BODY ════════════ -->
   <section class="essay-section">
+    <!-- Floating decorative elements -->
+    <div class="float-element float-circle" style="width:200px;height:200px;top:15%;left:-60px;" data-float-speed="0.02"></div>
+    <div class="float-element float-circle" style="width:120px;height:120px;top:45%;right:-30px;" data-float-speed="-0.03"></div>
+    <div class="float-element float-line" style="width:300px;top:65%;left:5%;transform:rotate(-15deg);" data-float-speed="0.015"></div>
+
     <div class="essay-opener">
-      <div class="text-col">
+      <div class="text-col reveal-left">
         <p class="drop-cap-paragraph">The alarm screamed as my clouded vision pierced through the darkness of my bedroom. I rolled over and violently turned off the alarm. I was ambitious to wake up at three o&rsquo;clock in the morning to go fishing with my friend. On one fishing trip, we caught a grand total of zero fish. When I arrived home frustrated, I watched a video on bodybuilding to destress from my journey. &ldquo;The only place to go from failure is to win.&rdquo; In that moment, Platz&rsquo;s words were engraved in my brain. For years, I thought failure was the worst possible outcome until I realized it was the only way to create true ambition. This small moment in my life has led me to find my &ldquo;win.&rdquo;</p>
       </div>
-      <div class="photo-inset">
+      <div class="photo-inset reveal-right">
         <img src="the-creator-photo.png"
              alt="The boy at the Nickelodeon conference table">
         <p class="photo-caption">Nickelodeon Headquarters, Manhattan &mdash; Bring Your Kid to Work Day</p>
       </div>
     </div>
 
-    <div class="essay-body">
-      <p>When I was six years old, my dad, who worked for Nickelodeon, took me to Bring Your Kid to Work Day. I was excited to walk into this giant building overlooking Manhattan, surrounded by paintings and drawings. I felt at home. My dad worked in the app development and creation department, so we sat at this round table with a blank piece of paper, and they asked us to write down an idea for a game. Inspired by my favorite show at the time, <em>School of Rock,</em> I wrote a game where you could play the instruments and had to complete challenges to avoid getting caught by the principal. At the time, I knew it had the potential to become a real game.</p>
+    <div class="essay-body stagger">
+      <p class="reveal">When I was six years old, my dad, who worked for Nickelodeon, took me to Bring Your Kid to Work Day. I was excited to walk into this giant building overlooking Manhattan, surrounded by paintings and drawings. I felt at home. My dad worked in the app development and creation department, so we sat at this round table with a blank piece of paper, and they asked us to write down an idea for a game. Inspired by my favorite show at the time, <em>School of Rock,</em> I wrote a game where you could play the instruments and had to complete challenges to avoid getting caught by the principal. At the time, I knew it had the potential to become a real game.</p>
 
-      <p>I forgot about this memory until years later, when I was scrolling through the app store and saw <em>School of Rock.</em> I was furious! It was basically the game I pitched in the conference room years earlier. Recently, I reminded my dad of this story, and in our conversation, he remembered my ideas, but not the details of the day. He was amazed at how I wouldn&rsquo;t stop creating.</p>
+      <p class="reveal">I forgot about this memory until years later, when I was scrolling through the app store and saw <em>School of Rock.</em> I was furious! It was basically the game I pitched in the conference room years earlier. Recently, I reminded my dad of this story, and in our conversation, he remembered my ideas, but not the details of the day. He was amazed at how I wouldn&rsquo;t stop creating.</p>
+    </div>
+
+    <div class="separator reveal">
+      <span class="dash"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dash"></span>
     </div>
 
     <!-- Pull Quote -->
-    <div class="pull-quote">
+    <div class="pull-quote reveal-scale">
       <p>I learned then that failure to recognize me<br>led me to understand who I truly am.<br><span class="accent">I am a creator.</span></p>
     </div>
 
-    <div class="essay-body">
-      <p>I researched online courses that would teach me the fundamentals of filmmaking. I was excited when the word &ldquo;creativity&rdquo; was listed as a top skill set for the field. This is what comes naturally to me. I had found a new ambition. I enrolled in a Khan Academy summer class called <em>Pixar in a Box.</em> I was hooked, clocking in hours day by day, listening to the background and the movie development process from the real Pixar creators.</p>
+    <div class="separator reveal">
+      <span class="dash"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dash"></span>
+    </div>
 
-      <p>I related to the storyboard writers. On little cards, they drew the scene, hung it up on the wall, and collaborated to have a cohesive plot and bring the characters to life for <em>Inside Out.</em> Everyone had a role that could change the value of the story and make it more meaningful. Listening to their journey, I felt the same excitement of purpose I discovered in the conference room where I created a game. I was itching to become a team member in such an inspirational environment.</p>
+    <div class="essay-body stagger">
+      <p class="reveal">I researched online courses that would teach me the fundamentals of filmmaking. I was excited when the word &ldquo;creativity&rdquo; was listed as a top skill set for the field. This is what comes naturally to me. I had found a new ambition. I enrolled in a Khan Academy summer class called <em>Pixar in a Box.</em> I was hooked, clocking in hours day by day, listening to the background and the movie development process from the real Pixar creators.</p>
 
-      <p>This time, sharing my ideas would give me a deeper understanding of the complexities of filmmaking. Establishing a connection and conveying a message to the audience is the drive and ambition that every creator yearns for. Through my course, I learned how to overcome the creative block. I had gained the creator&rsquo;s vision and confidence.</p>
+      <p class="reveal">I related to the storyboard writers. On little cards, they drew the scene, hung it up on the wall, and collaborated to have a cohesive plot and bring the characters to life for <em>Inside Out.</em> Everyone had a role that could change the value of the story and make it more meaningful. Listening to their journey, I felt the same excitement of purpose I discovered in the conference room where I created a game. I was itching to become a team member in such an inspirational environment.</p>
+
+      <p class="reveal">This time, sharing my ideas would give me a deeper understanding of the complexities of filmmaking. Establishing a connection and conveying a message to the audience is the drive and ambition that every creator yearns for. Through my course, I learned how to overcome the creative block. I had gained the creator&rsquo;s vision and confidence.</p>
     </div>
   </section>
 
   <!-- ════════════ CLOSING ════════════ -->
   <section class="closing-section">
-    <div class="closing-content">
+    <div class="closing-content reveal">
       <p>My mind is an ongoing reel of ideas. When the &ldquo;line is cast,&rdquo; I may be misunderstood by many, but I have found my strength by &ldquo;fighting the usual fish&rdquo; and grounding myself through curiosity and creativity. I value being ambitious and constantly generating unique and interesting ideas. I thrive in collaborative environments where I bring new perspectives and continually develop innovative approaches to various topics.</p>
     </div>
 
-    <div class="final-quote">
+    <div class="final-quote reveal-scale">
       <p>&ldquo;Through my discovery trip, I hooked the most significant catch&nbsp;&mdash; by knowing who I&nbsp;am.&rdquo;</p>
     </div>
   </section>
 
   <!-- ════════════ HERE & NOW ════════════ -->
   <section class="here-and-now">
-    <p class="section-label">Here &amp; Now</p>
-    <div class="portrait-wrapper">
+    <p class="section-label reveal">Here &amp; Now</p>
+    <div class="portrait-wrapper reveal-scale">
       <div class="portrait-frame">
         <img src="the-creator-now.png" alt="The creator, today">
       </div>
@@ -667,18 +751,86 @@
     </div>
   </section>
 
-
-  <!-- Minimal JS for scroll reveals -->
   <script>
-    const observer = new IntersectionObserver((entries) => {
+    // ── Intersection Observer for scroll reveals ──
+    const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+          entry.target.classList.add('in-view');
         }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .pull-quote').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // ── Hero parallax on scroll ──
+    const heroImage = document.querySelector('[data-parallax="0.3"]');
+    const heroContent = document.querySelector('[data-parallax="-0.15"]');
+    const scrollHint = document.querySelector('.scroll-hint');
+    const bigQuote = document.querySelector('[data-parallax-scale]');
+
+    // ── Floating elements parallax ──
+    const floatElements = document.querySelectorAll('[data-float-speed]');
+
+    let ticking = false;
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        const vh = window.innerHeight;
+
+        // Hero image moves slower (parallax depth)
+        if (heroImage) {
+          const offset = scrollY * 0.3;
+          heroImage.style.transform = `translate3d(0, ${offset}px, 0)`;
+        }
+
+        // Hero text moves up faster and fades
+        if (heroContent) {
+          const offset = scrollY * -0.15;
+          const opacity = Math.max(0, 1 - scrollY / (vh * 0.6));
+          heroContent.style.transform = `translate3d(0, ${offset}px, 0)`;
+          heroContent.style.opacity = opacity;
+        }
+
+        // Scroll hint fades out
+        if (scrollHint) {
+          const opacity = Math.max(0, 1 - scrollY / (vh * 0.25));
+          scrollHint.style.opacity = opacity;
+        }
+
+        // Big quotation mark scales and drifts
+        if (bigQuote) {
+          const quoteSection = bigQuote.closest('section');
+          const rect = quoteSection.getBoundingClientRect();
+          const progress = 1 - (rect.top / vh);
+          if (progress > 0 && progress < 2) {
+            const scale = 1 + progress * 0.08;
+            const drift = progress * 20;
+            bigQuote.style.transform = `translateX(-50%) scale(${scale}) translateY(${drift}px)`;
+            bigQuote.style.opacity = Math.min(1, progress * 0.8);
+          }
+        }
+
+        // Floating decorative elements
+        floatElements.forEach(el => {
+          const speed = parseFloat(el.dataset.floatSpeed);
+          const rect = el.closest('section').getBoundingClientRect();
+          const sectionProgress = -rect.top;
+          el.style.transform = `translateY(${sectionProgress * speed * 10}px) ${el.style.transform.includes('rotate') ? 'rotate(-15deg)' : ''}`;
+        });
+
+        ticking = false;
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   </script>
 
 </body>
