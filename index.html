@@ -409,7 +409,7 @@
      ═══════════════════════════════════════════ */
   .here-and-now {
     background: var(--charcoal);
-    padding: 2rem 2rem 6rem;
+    padding: 2rem 2rem 8rem;
     text-align: center;
     position: relative;
   }
@@ -422,6 +422,11 @@
     color: var(--amber);
     margin-bottom: 2.5rem;
     opacity: 0.7;
+  }
+
+  .here-and-now .portrait-wrapper {
+    display: inline-block;
+    position: relative;
   }
 
   .here-and-now .portrait-frame {
@@ -441,13 +446,46 @@
       0 30px 80px rgba(0,0,0,0.2);
   }
 
-  .here-and-now .portrait-label {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 1.1rem;
-    color: var(--amber-light);
-    margin-top: 1.5rem;
-    opacity: 0.85;
+  .here-and-now .signature-svg {
+    position: absolute;
+    bottom: -35px;
+    right: -80px;
+    width: 320px;
+    height: auto;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0.92;
+  }
+
+  .here-and-now .signature-svg path {
+    fill: none;
+    stroke: var(--amber-light);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1200;
+    stroke-dashoffset: 1200;
+    animation: signDraw 3s ease-out 0.5s forwards;
+  }
+
+  .here-and-now .signature-svg .underline-stroke {
+    stroke-width: 1.2;
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation: signDraw 1.5s ease-out 3s forwards;
+    opacity: 0.5;
+  }
+
+  @keyframes signDraw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @media (max-width: 768px) {
+    .here-and-now .signature-svg {
+      right: -40px;
+      bottom: -30px;
+      width: 240px;
+    }
   }
 
   .colophon {
@@ -623,14 +661,45 @@
   <!-- ════════════ HERE & NOW ════════════ -->
   <section class="here-and-now">
     <p class="section-label">Here &amp; Now</p>
-    <div class="portrait-frame">
-      <img src="the-creator-now.png" alt="The creator, today">
+    <div class="portrait-wrapper">
+      <div class="portrait-frame">
+        <img src="the-creator-now.png" alt="The creator, today">
+      </div>
+      <svg class="signature-svg" viewBox="0 0 360 100" xmlns="http://www.w3.org/2000/svg">
+        <!-- H -->
+        <path d="M12,72 C12,72 14,38 15,28 C16,22 17,18 18,22 C19,30 18,52 19,62 C20,68 21,45 24,36 C27,27 30,24 33,28 C36,34 36,52 37,60"/>
+        <!-- o -->
+        <path d="M44,42 C40,42 38,48 39,54 C40,60 44,63 48,61 C52,58 53,50 51,44 C49,40 45,42 44,42"/>
+        <!-- l -->
+        <path d="M56,24 C56,28 57,48 57,58 C57,62 58,64 58,60"/>
+        <!-- d -->
+        <path d="M66,48 C63,44 60,44 59,48 C58,54 60,62 64,62 C67,62 68,56 68,48 C68,36 69,26 69,24"/>
+        <!-- e -->
+        <path d="M76,50 C74,48 72,48 72,52 C72,58 74,62 78,60 C80,58 80,54 78,50"/>
+        <!-- n -->
+        <path d="M84,62 C84,58 84,48 84,44 C84,42 86,40 88,44 C91,50 92,56 93,62"/>
+        <!-- space + B -->
+        <path d="M108,26 C108,26 108,48 108,62 C108,64 110,24 110,24 C112,24 120,26 120,34 C120,40 112,42 112,42 C118,42 124,46 122,54 C120,62 112,64 108,62"/>
+        <!-- r -->
+        <path d="M130,44 C130,48 130,58 130,62 C130,44 132,40 136,38"/>
+        <!-- e -->
+        <path d="M144,50 C142,48 140,48 140,52 C140,58 142,62 146,60 C148,58 148,54 146,50"/>
+        <!-- l -->
+        <path d="M152,24 C152,28 153,48 153,58 C153,62 154,64 154,60"/>
+        <!-- e -->
+        <path d="M162,50 C160,48 158,48 158,52 C158,58 160,62 164,60 C166,58 166,54 164,50"/>
+        <!-- s -->
+        <path d="M172,44 C176,42 178,44 176,48 C174,50 170,52 170,56 C170,60 174,62 178,60"/>
+        <!-- k -->
+        <path d="M184,24 C184,28 184,48 184,62 M184,50 C188,44 192,40 194,38 M188,48 C190,54 194,60 196,64"/>
+        <!-- y -->
+        <path d="M202,44 C204,50 206,56 208,50 C210,44 212,56 212,64 C212,72 208,76 204,74"/>
+        <!-- artistic underline flourish -->
+        <path class="underline-stroke" d="M8,78 C40,72 100,68 160,70 C220,72 280,76 340,68 C320,74 280,78 260,76"/>
+      </svg>
     </div>
   </section>
 
-  <footer class="colophon">
-    <p>A boy at a conference table &bull; A game that became real &bull; A creator who found his way</p>
-  </footer>
 
   <!-- Minimal JS for scroll reveals -->
   <script>
