@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Am a Creator</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;1,300;1,400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --amber: #d4a574;
+    --amber-light: #e8c9a0;
+    --amber-dark: #b8864e;
+    --cream: #f5efe6;
+    --cream-warm: #f0e6d6;
+    --charcoal: #1a1714;
+    --charcoal-light: #2d2822;
+    --charcoal-mid: #3d362e;
+    --text-body: #3d362e;
+    --text-muted: #7a6f62;
+    --gold: #c9a84c;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 18px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--amber) var(--charcoal);
+  }
+
+  body {
+    background: var(--charcoal);
+    color: var(--cream);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    overflow-x: hidden;
+  }
+
+  /* ═══════════════════════════════════════════
+     SECTION 1: HERO — Full bleed photo
+     ═══════════════════════════════════════════ */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .hero-image-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .hero-image-layer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    filter: sepia(0.45) contrast(1.08) saturate(0.9) brightness(0.95);
+  }
+
+  .hero-image-layer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom,
+        rgba(26,23,20,0.15) 0%,
+        rgba(26,23,20,0.0) 30%,
+        rgba(26,23,20,0.0) 50%,
+        rgba(26,23,20,0.6) 75%,
+        rgba(26,23,20,0.95) 100%
+      ),
+      linear-gradient(to right,
+        rgba(26,23,20,0.3) 0%,
+        transparent 30%,
+        transparent 70%,
+        rgba(26,23,20,0.3) 100%
+      );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 2rem 6vh;
+    max-width: 900px;
+    animation: fadeUp 1.8s ease-out both;
+  }
+
+  .hero-overline {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--amber-light);
+    margin-bottom: 1.2rem;
+    opacity: 0.9;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    line-height: 0.95;
+    color: var(--cream);
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--amber-light);
+  }
+
+  .hero-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    color: var(--amber);
+    opacity: 0.8;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  .scroll-hint span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--amber);
+    opacity: 0.5;
+  }
+
+  .scroll-hint .line {
+    width: 1px;
+    height: 30px;
+    background: linear-gradient(to bottom, var(--amber), transparent);
+    opacity: 0.4;
+  }
+
+  /* ═══════════════════════════════════════════
+     SECTION 2: Opening quote — cinematic
+     ═══════════════════════════════════════════ */
+  .quote-break {
+    background: var(--charcoal);
+    padding: 8rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .quote-break::before {
+    content: '\201C';
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-size: 40rem;
+    color: var(--charcoal-light);
+    top: -8rem;
+    left: 50%;
+    transform: translateX(-50%);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .quote-break blockquote {
+    max-width: 700px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .quote-break blockquote p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    line-height: 1.35;
+    color: var(--amber-light);
+    font-weight: 400;
+  }
+
+  .quote-break blockquote cite {
+    display: block;
+    margin-top: 1.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-style: normal;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ═══════════════════════════════════════════
+     SECTION 3: Essay body — editorial layout
+     ═══════════════════════════════════════════ */
+  .essay-section {
+    background: var(--cream);
+    color: var(--text-body);
+    position: relative;
+  }
+
+  .essay-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to bottom, var(--charcoal), var(--cream));
+    pointer-events: none;
+  }
+
+  .essay-opener {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10rem 2rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .essay-opener .photo-inset {
+    position: relative;
+    margin-top: 2rem;
+  }
+
+  .essay-opener .photo-inset img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    filter: sepia(0.45) contrast(1.08) saturate(0.9) brightness(0.95);
+    border: 1px solid var(--amber-light);
+    box-shadow:
+      0 4px 20px rgba(0,0,0,0.1),
+      0 20px 60px rgba(0,0,0,0.08);
+  }
+
+  .photo-caption {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 0.8rem;
+    padding-left: 0.5rem;
+    border-left: 2px solid var(--amber);
+  }
+
+  .essay-opener .text-col {
+    padding-top: 1rem;
+  }
+
+  .drop-cap-paragraph {
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: var(--text-body);
+    font-weight: 400;
+  }
+
+  .drop-cap-paragraph::first-letter {
+    float: left;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 5.5rem;
+    line-height: 0.75;
+    padding-right: 0.6rem;
+    padding-top: 0.15rem;
+    color: var(--amber-dark);
+  }
+
+  .essay-body {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 3rem 2rem 6rem;
+  }
+
+  .essay-body p {
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: var(--text-body);
+    margin-bottom: 1.8rem;
+    font-weight: 400;
+  }
+
+  .essay-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ═══════════════════════════════════════════
+     Pull quote — interrupts the essay flow
+     ═══════════════════════════════════════════ */
+  .pull-quote {
+    max-width: 1000px;
+    margin: 4rem auto;
+    padding: 4rem 2rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .pull-quote::before,
+  .pull-quote::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 1px;
+    background: var(--amber);
+  }
+
+  .pull-quote::before { top: 0; }
+  .pull-quote::after { bottom: 0; }
+
+  .pull-quote p {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    color: var(--charcoal);
+    margin-bottom: 0 !important;
+  }
+
+  .pull-quote .accent {
+    color: var(--amber-dark);
+  }
+
+  /* ═══════════════════════════════════════════
+     SECTION 4: Closing — dark cinematic
+     ═══════════════════════════════════════════ */
+  .closing-section {
+    background: var(--charcoal);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .closing-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to bottom, var(--cream), var(--charcoal));
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .closing-content {
+    position: relative;
+    z-index: 2;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 12rem 2rem 4rem;
+  }
+
+  .closing-content p {
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: var(--cream-warm);
+    margin-bottom: 1.8rem;
+    font-weight: 400;
+  }
+
+  .final-quote {
+    text-align: center;
+    padding: 6rem 2rem 8rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .final-quote p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+    line-height: 1.45;
+    color: var(--amber-light);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  /* ═══════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════ */
+  .colophon {
+    background: var(--charcoal);
+    border-top: 1px solid var(--charcoal-mid);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .colophon p {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ═══════════════════════════════════════════
+     Grain overlay for film texture
+     ═══════════════════════════════════════════ */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+  }
+
+  /* ═══════════════════════════════════════════
+     ANIMATIONS
+     ═══════════════════════════════════════════ */
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+  }
+
+  /* ═══════════════════════════════════════════
+     RESPONSIVE
+     ═══════════════════════════════════════════ */
+  @media (max-width: 768px) {
+    html { font-size: 16px; }
+
+    .essay-opener {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 8rem 1.5rem 3rem;
+    }
+
+    .essay-opener .photo-inset {
+      order: -1;
+      margin-top: 0;
+    }
+
+    .essay-body,
+    .closing-content {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .pull-quote {
+      padding: 3rem 1.5rem;
+      margin: 2rem auto;
+    }
+
+    .quote-break {
+      padding: 5rem 1.5rem;
+    }
+
+    .quote-break::before {
+      font-size: 20rem;
+      top: -4rem;
+    }
+  }
+
+  /* Smooth scroll-triggered reveals via CSS */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+  <!-- ════════════ HERO ════════════ -->
+  <section class="hero">
+    <div class="hero-image-layer">
+      <img src="the-creator-photo.png"
+           alt="A young boy sits at a conference table at Nickelodeon, surrounded by adults — Bring Your Kid to Work Day">
+    </div>
+    <div class="hero-content">
+      <p class="hero-overline">A College Essay &mdash; A Childhood Memory</p>
+      <h1 class="hero-title">I Am a <em>Creator</em></h1>
+      <p class="hero-subtitle">The conference room where it all began</p>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="line"></div>
+    </div>
+  </section>
+
+  <!-- ════════════ OPENING QUOTE ════════════ -->
+  <section class="quote-break">
+    <blockquote>
+      <p>The only place to go from failure is to win.</p>
+      <cite>Tom Platz</cite>
+    </blockquote>
+  </section>
+
+  <!-- ════════════ ESSAY BODY ════════════ -->
+  <section class="essay-section">
+    <div class="essay-opener">
+      <div class="text-col">
+        <p class="drop-cap-paragraph">The alarm screamed as my clouded vision pierced through the darkness of my bedroom. I rolled over and violently turned off the alarm. I was ambitious to wake up at three o&rsquo;clock in the morning to go fishing with my friend. On one fishing trip, we caught a grand total of zero fish. When I arrived home frustrated, I watched a video on bodybuilding to destress from my journey. &ldquo;The only place to go from failure is to win.&rdquo; In that moment, Platz&rsquo;s words were engraved in my brain. For years, I thought failure was the worst possible outcome until I realized it was the only way to create true ambition. This small moment in my life has led me to find my &ldquo;win.&rdquo;</p>
+      </div>
+      <div class="photo-inset">
+        <img src="the-creator-photo.png"
+             alt="The boy at the Nickelodeon conference table">
+        <p class="photo-caption">Nickelodeon Headquarters, Manhattan &mdash; Bring Your Kid to Work Day</p>
+      </div>
+    </div>
+
+    <div class="essay-body">
+      <p>When I was six years old, my dad, who worked for Nickelodeon, took me to Bring Your Kid to Work Day. I was excited to walk into this giant building overlooking Manhattan, surrounded by paintings and drawings. I felt at home. My dad worked in the app development and creation department, so we sat at this round table with a blank piece of paper, and they asked us to write down an idea for a game. Inspired by my favorite show at the time, <em>School of Rock,</em> I wrote a game where you could play the instruments and had to complete challenges to avoid getting caught by the principal. At the time, I knew it had the potential to become a real game.</p>
+
+      <p>I forgot about this memory until years later, when I was scrolling through the app store and saw <em>School of Rock.</em> I was furious! It was basically the game I pitched in the conference room years earlier. Recently, I reminded my dad of this story, and in our conversation, he remembered my ideas, but not the details of the day. He was amazed at how I wouldn&rsquo;t stop creating.</p>
+    </div>
+
+    <!-- Pull Quote -->
+    <div class="pull-quote">
+      <p>I learned then that failure to recognize me<br>led me to understand who I truly am.<br><span class="accent">I am a creator.</span></p>
+    </div>
+
+    <div class="essay-body">
+      <p>I researched online courses that would teach me the fundamentals of filmmaking. I was excited when the word &ldquo;creativity&rdquo; was listed as a top skill set for the field. This is what comes naturally to me. I had found a new ambition. I enrolled in a Khan Academy summer class called <em>Pixar in a Box.</em> I was hooked, clocking in hours day by day, listening to the background and the movie development process from the real Pixar creators.</p>
+
+      <p>I related to the storyboard writers. On little cards, they drew the scene, hung it up on the wall, and collaborated to have a cohesive plot and bring the characters to life for <em>Inside Out.</em> Everyone had a role that could change the value of the story and make it more meaningful. Listening to their journey, I felt the same excitement of purpose I discovered in the conference room where I created a game. I was itching to become a team member in such an inspirational environment.</p>
+
+      <p>This time, sharing my ideas would give me a deeper understanding of the complexities of filmmaking. Establishing a connection and conveying a message to the audience is the drive and ambition that every creator yearns for. Through my course, I learned how to overcome the creative block. I had gained the creator&rsquo;s vision and confidence.</p>
+    </div>
+  </section>
+
+  <!-- ════════════ CLOSING ════════════ -->
+  <section class="closing-section">
+    <div class="closing-content">
+      <p>My mind is an ongoing reel of ideas. When the &ldquo;line is cast,&rdquo; I may be misunderstood by many, but I have found my strength by &ldquo;fighting the usual fish&rdquo; and grounding myself through curiosity and creativity. I value being ambitious and constantly generating unique and interesting ideas. I thrive in collaborative environments where I bring new perspectives and continually develop innovative approaches to various topics.</p>
+    </div>
+
+    <div class="final-quote">
+      <p>&ldquo;Through my discovery trip, I hooked the most significant catch&nbsp;&mdash; by knowing who I&nbsp;am.&rdquo;</p>
+    </div>
+  </section>
+
+  <footer class="colophon">
+    <p>A boy at a conference table &bull; A game that became real &bull; A creator who found his way</p>
+  </footer>
+
+  <!-- Minimal JS for scroll reveals -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
