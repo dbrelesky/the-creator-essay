@@ -404,6 +404,50 @@
   /* ═══════════════════════════════════════════
      FOOTER
      ═══════════════════════════════════════════ */
+  /* ═══════════════════════════════════════════
+     HERE & NOW portrait section
+     ═══════════════════════════════════════════ */
+  .here-and-now {
+    background: var(--charcoal);
+    padding: 2rem 2rem 6rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .here-and-now .section-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 2.5rem;
+    opacity: 0.7;
+  }
+
+  .here-and-now .portrait-frame {
+    display: inline-block;
+    position: relative;
+    max-width: 420px;
+    width: 100%;
+  }
+
+  .here-and-now .portrait-frame img {
+    width: 100%;
+    filter: grayscale(1) contrast(1.1) brightness(0.95);
+    box-shadow:
+      0 8px 40px rgba(0,0,0,0.4),
+      0 30px 80px rgba(0,0,0,0.2);
+  }
+
+  .here-and-now .portrait-label {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--amber-light);
+    margin-top: 1.5rem;
+    opacity: 0.85;
+  }
+
   .colophon {
     background: var(--charcoal);
     border-top: 1px solid var(--charcoal-mid);
@@ -572,6 +616,15 @@
     <div class="final-quote">
       <p>&ldquo;Through my discovery trip, I hooked the most significant catch&nbsp;&mdash; by knowing who I&nbsp;am.&rdquo;</p>
     </div>
+  </section>
+
+  <!-- ════════════ HERE & NOW ════════════ -->
+  <section class="here-and-now">
+    <p class="section-label">Here &amp; Now</p>
+    <div class="portrait-frame">
+      <img src="the-creator-now.png" alt="The creator, today">
+    </div>
+    <p class="portrait-label">The same boy. Still creating.</p>
   </section>
 
   <footer class="colophon">
